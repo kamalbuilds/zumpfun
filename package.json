@@ -1,0 +1,40 @@
+{
+  "name": "zumpfun",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Zero-knowledge meme token launcher on Starknet",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "build": "npm run build:contracts && npm run build:circuits && npm run build:frontend && npm run build:backend",
+    "build:contracts": "cd contracts && scarb build",
+    "build:circuits": "cd circuits && nargo compile",
+    "build:frontend": "cd frontend && npm run build",
+    "build:backend": "cd backend && npm run build",
+    "test": "npm run test:contracts && npm run test:circuits && npm run test:frontend && npm run test:backend",
+    "test:contracts": "cd contracts && scarb test",
+    "test:circuits": "cd circuits && nargo test",
+    "test:frontend": "cd frontend && npm run test",
+    "test:backend": "cd backend && npm run test",
+    "lint": "npm run lint:frontend && npm run lint:backend",
+    "lint:frontend": "cd frontend && npm run lint",
+    "lint:backend": "cd backend && npm run lint",
+    "deploy:testnet": "npm run build && node scripts/deploy-testnet.js",
+    "deploy:mainnet": "npm run build && node scripts/deploy-mainnet.js",
+    "setup": "npm run setup:frontend && npm run setup:backend",
+    "setup:frontend": "cd frontend && npm install",
+    "setup:backend": "cd backend && npm install"
+  },
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
