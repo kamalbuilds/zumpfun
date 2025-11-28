@@ -86,7 +86,7 @@ pub mod PrivacyToken {
     use super::{IPrivacyToken, ContractAddress};
     use starknet::{
         get_caller_address, get_block_timestamp,
-        storage::{StoragePointerReadAccess, StoragePointerWriteAccess}
+        storage::{StoragePointerReadAccess, StoragePointerWriteAccess, Map, StorageMapReadAccess, StorageMapWriteAccess}
     };
     use core::num::traits::Zero;
 
@@ -97,15 +97,15 @@ pub mod PrivacyToken {
         symbol: felt252,
         decimals: u8,
         total_supply: u256,
-        balances: LegacyMap<ContractAddress, u256>,
-        allowances: LegacyMap<(ContractAddress, ContractAddress), u256>,
+        balances: Map::<ContractAddress, u256>,
+        allowances: Map::<(ContractAddress, ContractAddress), u256>,
         // ============ Privacy Storage ============
         /// Total amount currently shielded
         total_shielded: u256,
         /// Commitment set (for membership proofs)
-        commitments: LegacyMap<felt252, bool>,
+        commitments: Map::<felt252, bool>,
         /// Nullifier set (prevent double-spending)
-        nullifiers: LegacyMap<felt252, bool>,
+        nullifiers: Map::<felt252, bool>,
         /// Merkle tree root for efficient membership proofs
         merkle_root: felt252,
         /// Number of commitments (tree size)
@@ -280,7 +280,7 @@ pub mod PrivacyToken {
             self
                 .emit(
                     Transfer {
-                        from: caller, to: ContractAddress::from(0), value: amount
+                        from: caller, to: starknet::contract_address_const::<0>(), value: amount
                     }
                 ); // Burn event
             self
@@ -323,7 +323,7 @@ pub mod PrivacyToken {
             self
                 .emit(
                     Transfer {
-                        from: ContractAddress::from(0), to: caller, value: amount
+                        from: starknet::contract_address_const::<0>(), to: caller, value: amount
                     }
                 ); // Mint event
             self

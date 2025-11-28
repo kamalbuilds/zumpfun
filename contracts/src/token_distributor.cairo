@@ -105,7 +105,7 @@ pub mod TokenDistributor {
     };
     use starknet::{
         get_caller_address, get_block_timestamp, get_contract_address,
-        storage::{StoragePointerReadAccess, StoragePointerWriteAccess}
+        storage::{StoragePointerReadAccess, StoragePointerWriteAccess, Map, StorageMapReadAccess, StorageMapWriteAccess}
     };
     use core::num::traits::Zero;
 
@@ -119,11 +119,11 @@ pub mod TokenDistributor {
         total_claimed: u256,
         recipient_count: u256,
         /// Nullifier set (prevent double-claiming)
-        used_nullifiers: LegacyMap<felt252, bool>,
+        used_nullifiers: Map::<felt252, bool>,
         /// Commitment tracking
-        commitments: LegacyMap<felt252, bool>,
+        commitments: Map::<felt252, bool>,
         /// Vesting schedules (by commitment)
-        vesting_schedules: LegacyMap<felt252, VestingSchedule>,
+        vesting_schedules: Map::<felt252, VestingSchedule>,
         /// Distribution active flag
         active: bool,
         /// Admin addresses (multisig)

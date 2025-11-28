@@ -109,7 +109,7 @@ pub mod BondingCurve {
     use super::{IBondingCurve, CurveState, TradingParams, ContractAddress};
     use starknet::{
         get_caller_address, get_block_timestamp, get_contract_address,
-        storage::{StoragePointerReadAccess, StoragePointerWriteAccess}
+        storage::{StoragePointerReadAccess, StoragePointerWriteAccess, Map, StorageMapReadAccess, StorageMapWriteAccess}
     };
     use core::num::traits::Zero;
 
@@ -135,9 +135,9 @@ pub mod BondingCurve {
         /// Trading parameters
         trading_params: TradingParams,
         /// Nullifier set (prevent double-spending)
-        used_nullifiers: LegacyMap<felt252, bool>,
+        used_nullifiers: Map::<felt252, bool>,
         /// Commitment tracking
-        commitments: LegacyMap<felt252, bool>,
+        commitments: Map::<felt252, bool>,
         /// Creator commitment (for fee withdrawal)
         creator_commitment: felt252,
         /// Accumulated fees
@@ -391,7 +391,7 @@ pub mod BondingCurve {
             // TODO: Deploy AMM pool with liquidity from bonding curve
             // This would integrate with a Uniswap V2 style AMM on Ztarknet
             // For now, using placeholder address
-            let amm_pool = ContractAddress::from(0x123); // Placeholder
+            let amm_pool = starknet::contract_address_const::<0x123>(); // Placeholder
 
             // Mark as graduated
             self.graduated.write(true);

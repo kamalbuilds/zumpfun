@@ -1,0 +1,20 @@
+{
+  "ztarknet_devnet": {
+    "rpc_url": "https://ztarknet-madara.d.karnot.xyz",
+    "deployer_account": "0x06fe3031556a0ca23be489a0199c9e304f00f13900eacefcd50aeccdf57a23f6",
+    "class_hashes": {
+      "launchpad_factory": "0x7cf078f3741c786a9c4323e205a584e92c578bf485973fd1b2f9b75939a0622",
+      "bonding_curve": "0x2a7c6426dff54a7fbf08e8871060a56f179a5ce2fcfcbeee21777c0ac9b61e3",
+      "privacy_token": "0x3b740bde512d696a026360f85a002f1a6e2d3447f37441cf3d9f41ed12815c4",
+      "token_distributor": "0x2d58435e145ebea341d93f32e0f19c1c221fb09105fbb2981a0c3eeb110ead"
+    },
+    "transaction_hashes": {
+      "launchpad_factory_declare": "0x195533c37feaf022ab0fad88cf856141722ecf78917e5585e38989bed454dbb",
+      "bonding_curve_declare": "0x61a5c44bc56564451d331e8f3d158a21192519987461326439abc2cbd84a5ab",
+      "privacy_token_declare": "0x6eedcf0f7006014d092b35c46e384d706cd48a7bc1a6cd21f15a5334741a3f0",
+      "token_distributor_declare": "0xc042e9ab884b2b19edb0eef0e0fa007dc399f535e5feb158705d967d41703d"
+    },
+    "deployed_contracts": {},
+    "verifiers": {}
+  }
+}

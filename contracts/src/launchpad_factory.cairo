@@ -100,7 +100,7 @@ pub mod LaunchpadFactory {
     };
     use starknet::{
         get_caller_address, get_block_timestamp, ClassHash, syscalls::deploy_syscall,
-        storage::{StoragePointerReadAccess, StoragePointerWriteAccess}
+        storage::{StoragePointerReadAccess, StoragePointerWriteAccess, Map, StorageMapReadAccess, StorageMapWriteAccess}
     };
     use core::num::traits::Zero;
 
@@ -113,11 +113,11 @@ pub mod LaunchpadFactory {
         /// Total number of token launches created
         total_launches: u256,
         /// Mapping: token_id => launchpad_address
-        launches: LegacyMap<u256, ContractAddress>,
+        launches: Map::<u256, ContractAddress>,
         /// Mapping: (creator_address, index) => launchpad_address
-        creator_launches: LegacyMap<(ContractAddress, u256), ContractAddress>,
+        creator_launches: Map::<(ContractAddress, u256), ContractAddress>,
         /// Mapping: creator_address => number of launches
-        creator_launch_count: LegacyMap<ContractAddress, u256>,
+        creator_launch_count: Map::<ContractAddress, u256>,
         /// Garaga verifier contract address for ZK proof verification
         garaga_verifier: ContractAddress,
         /// Emergency pause flag
