@@ -58,10 +58,10 @@ fn main(
 
     // 3. Verify total pool is non-zero
     assert(total_pool != 0, "Total pool cannot be zero");
-    assert(total_pool > 0, "Total pool must be positive");
+    assert(total_pool as u64 > 0, "Total pool must be positive");
 
     // 4. Verify contribution doesn't exceed total pool
-    assert(contribution <= total_pool, "Contribution exceeds total pool");
+    assert(contribution as u64 <= total_pool as u64, "Contribution exceeds total pool");
 
     // 5. Calculate expected allocation
     // allocation = (contribution * total_tokens) / total_pool
@@ -75,10 +75,10 @@ fn main(
     assert(allocation == expected_allocation, "Incorrect allocation calculation");
 
     // 7. Verify allocation is non-negative
-    assert(allocation >= 0, "Allocation must be non-negative");
+    assert(allocation as u64 >= 0, "Allocation must be non-negative");
 
     // 8. Verify allocation doesn't exceed total tokens
-    assert(allocation <= total_tokens, "Allocation exceeds total tokens");
+    assert(allocation as u64 <= total_tokens as u64, "Allocation exceeds total tokens");
 }
 
 /// Calculate user allocation based on contribution
@@ -92,7 +92,7 @@ pub fn calculate_allocation(
 }
 
 /// Verify allocation fairness across multiple users
-pub fn verify_allocation_fairness<N>(
+pub fn verify_allocation_fairness<let N: u32>(
     contributions: [Field; N],
     allocations: [Field; N],
     total_pool: Field,
@@ -111,7 +111,7 @@ pub fn verify_allocation_fairness<N>(
     let pool_matches = sum_contributions == total_pool;
 
     // 3. Verify sum of allocations doesn't exceed total tokens
-    let allocation_valid = sum_allocations <= total_tokens;
+    let allocation_valid = sum_allocations as u64 <= total_tokens as u64;
 
     // 4. Verify each individual allocation is correct
     let mut all_correct = true;
@@ -124,6 +124,7 @@ pub fn verify_allocation_fairness<N>(
         all_correct = all_correct & (allocations[i] == expected);
     }
 
+    // Use bitwise AND (Noir doesn't support short-circuiting &&)
     pool_matches & allocation_valid & all_correct
 }
 
@@ -148,7 +149,7 @@ pub fn verify_minimum_allocation(
     allocation: Field,
     min_threshold: Field
 ) -> bool {
-    allocation >= min_threshold
+    allocation as u64 >= min_threshold as u64
 }
 
 /// Calculate pro-rata distribution
@@ -162,7 +163,7 @@ pub fn calculate_prorata_share(
 }
 
 /// Batch verify multiple allocations
-pub fn batch_verify_allocations<N>(
+pub fn batch_verify_allocations<let N: u32>(
     contributions: [Field; N],
     blindings: [Field; N],
     commitments: [Field; N],

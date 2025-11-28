@@ -44,10 +44,10 @@ fn main(
     assert(is_in_range, "Amount out of valid range");
 
     // 3. Verify amount is positive
-    assert(amount >= MIN_CONTRIBUTION, "Amount must be positive");
+    assert(amount as u64 >= MIN_CONTRIBUTION as u64, "Amount must be positive");
 
     // 4. Verify amount doesn't exceed maximum
-    assert(amount <= MAX_CONTRIBUTION, "Amount exceeds maximum");
+    assert(amount as u64 <= MAX_CONTRIBUTION as u64, "Amount exceeds maximum");
 
     // 5. Additional constraint: amount must be non-zero
     assert(amount != 0, "Amount cannot be zero");
@@ -77,7 +77,7 @@ pub fn generate_blinding(seed: Field) -> Field {
 }
 
 /// Batch verify multiple contributions
-pub fn batch_verify_contributions<N>(
+pub fn batch_verify_contributions<let N: u32>(
     amounts: [Field; N],
     blindings: [Field; N],
     commitments: [Field; N],

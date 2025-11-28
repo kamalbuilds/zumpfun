@@ -149,7 +149,7 @@ pub fn verify_disclosure_constraints(
 }
 
 /// Create composite disclosure (combine multiple selective disclosures)
-pub fn create_composite_disclosure<N>(
+pub fn create_composite_disclosure<let N: u32>(
     disclosures: [[Field; 10]; N],
     masks: [[u1; 10]; N]
 ) -> [Field; 10] {

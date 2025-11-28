@@ -54,7 +54,7 @@ pub fn range_check(value: Field, min: Field, max: Field) -> bool {
 }
 
 /// Hash array of fields using Pedersen hash
-pub fn hash_array<N>(arr: [Field; N]) -> Field {
+pub fn hash_array<let N: u32>(arr: [Field; N]) -> Field {
     std::hash::pedersen_hash(arr)
 }
 
@@ -73,7 +73,7 @@ pub fn calculate_proportion(numerator: Field, denominator: Field, multiplier: Fi
 
 /// Verify Merkle tree membership
 /// Proves that a leaf exists in a Merkle tree with given root
-pub fn verify_merkle_proof<N>(
+pub fn verify_merkle_proof<let N: u32>(
     leaf: Field,
     path: [Field; N],
     indices: [u1; N],
@@ -112,12 +112,12 @@ pub fn verify_nullifier(secret: Field, commitment: Field, nullifier: Field) -> b
 
 /// Bit decomposition helper for range proofs
 /// Decomposes a field element into bits
-pub fn to_bits<N>(value: Field) -> [u1; N] {
-    value.to_le_bits(N)
+pub fn to_bits<let N: u32>(value: Field) -> [u1; N] {
+    value.to_le_bits()
 }
 
 /// Reconstruct field element from bits
-pub fn from_bits<N>(bits: [u1; N]) -> Field {
+pub fn from_bits<let N: u32>(bits: [u1; N]) -> Field {
     let mut result: Field = 0;
     let mut power: Field = 1;
 
