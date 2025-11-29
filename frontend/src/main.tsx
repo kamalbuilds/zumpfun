@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './styles/global.css';
-
+import StarknetProvider from './components/starknet-provider';
 // Error boundary for production
 class ErrorBoundary extends React.Component<
   { children: React.ReactNode },
@@ -54,7 +54,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <ErrorBoundary>
+    <StarknetProvider>
       <App />
+      </StarknetProvider>
     </ErrorBoundary>
   </React.StrictMode>
 );

@@ -1,0 +1,99 @@
+[
+  {
+    "type": "function",
+    "name": "calculate_buy_price",
+    "inputs": [
+      {
+        "name": "amount",
+        "type": "core::integer::u256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "core::integer::u256"
+      }
+    ],
+    "state_mutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "calculate_sell_price",
+    "inputs": [
+      {
+        "name": "amount",
+        "type": "core::integer::u256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "core::integer::u256"
+      }
+    ],
+    "state_mutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "buy_tokens",
+    "inputs": [
+      {
+        "name": "amount",
+        "type": "core::integer::u256"
+      },
+      {
+        "name": "proof",
+        "type": "core::array::Array::<core::felt252>"
+      },
+      {
+        "name": "commitment",
+        "type": "core::felt252"
+      }
+    ],
+    "outputs": [],
+    "state_mutability": "external"
+  },
+  {
+    "type": "function",
+    "name": "sell_tokens",
+    "inputs": [
+      {
+        "name": "amount",
+        "type": "core::integer::u256"
+      }
+    ],
+    "outputs": [],
+    "state_mutability": "external"
+  },
+  {
+    "type": "function",
+    "name": "get_current_supply",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "core::integer::u256"
+      }
+    ],
+    "state_mutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "get_reserve_balance",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "core::integer::u256"
+      }
+    ],
+    "state_mutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "get_trading_params",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "(core::integer::u256, core::integer::u256, core::integer::u256, core::integer::u256)"
+      }
+    ],
+    "state_mutability": "view"
+  }
+]

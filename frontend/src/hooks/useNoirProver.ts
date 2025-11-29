@@ -75,15 +75,15 @@ export const useNoirProver = () => {
         setProofProgress(60);
 
         // Generate witness
-        const witness = await noir.execute(inputs);
+        const { witness, returnValue } = await noir.execute(inputs);
         setProofProgress(80);
 
-        // Generate proof
-        const proof = await backend.generateProof(witness);
+        // Generate proof (second parameter is compression flag)
+        const proof = await backend.generateProof(witness, true);
         setProofProgress(100);
 
         // Extract public inputs
-        const publicInputs = proof.publicInputs || [];
+        const publicInputs = returnValue ? [returnValue] : [];
 
         return {
           proof: proof.proof,
@@ -122,14 +122,12 @@ export const useNoirProver = () => {
           throw new Error(`Circuit ${circuitName} not found`);
         }
 
-        // Initialize backend
+        // Initialize backend and Noir
         const backend = new BarretenbergBackend(manifest);
+        const noir = new Noir(manifest, backend);
 
-        // Verify proof
-        const isValid = await backend.verifyProof({
-          proof,
-          publicInputs,
-        });
+        // Verify proof (second parameter is compression flag)
+        const isValid = await backend.verifyProof(proof, true);
 
         return isValid;
       } catch (err) {

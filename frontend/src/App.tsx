@@ -1,59 +1,98 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { StarknetConfig, InjectedConnector } from '@starknet-react/core';
+import { BrowserRouter, Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
 import { WalletConnect } from './components/WalletConnect';
-import { TokenLaunch } from './components/TokenLaunch';
-import { MarketView } from './components/MarketView';
-import { ThemeProvider } from './providers/ThemeProvider';
+import { DevModeToggle } from './components/DevModeToggle';
+import { NetworkBanner } from './components/NetworkBanner';
+import { DevModeProvider } from './hooks/useDevAccount';
+import Landing from './pages/Landing';
+import Launch from './pages/Launch';
+import Market from './pages/Market';
+import TokenDetail from './pages/TokenDetail';
+import { Toaster } from './components/ui/sonner';
+import { Rocket, Store } from 'lucide-react';
 import './styles/global.css';
 
-// Configure Starknet connectors
-const connectors = [
-  new InjectedConnector({ options: { id: 'argentX', name: 'ArgentX' } }),
-  new InjectedConnector({ options: { id: 'braavos', name: 'Braavos' } }),
-];
+// Note: WalletProvider handles Starknet configuration internally
 
 // Layout component
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const location = useLocation();
+
+  const navLinks = [
+    { path: '/', label: 'Launch', icon: Rocket },
+    { path: '/market', label: 'Market', icon: Store },
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900">
-      <nav className="border-b border-purple-500/20 bg-gray-900/50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                ZumpFun
-              </h1>
-              <span className="ml-2 text-xs text-purple-300 bg-purple-900/50 px-2 py-1 rounded">
-                Private Launch
-              </span>
-            </div>
-            <div className="flex items-center space-x-4">
-              <a
-                href="/"
-                className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Launch
-              </a>
-              <a
-                href="/market"
-                className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Market
-              </a>
-              <WalletConnect />
+    <div className="min-h-screen bg-[#0A0B0D]">
+      {/* Modern Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-black/40 backdrop-blur-xl">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex justify-between items-center h-20">
+            {/* Logo */}
+            <Link to="/" className="flex items-center gap-3 group">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                <Rocket className="w-5 h-5 text-white" />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-xl font-bold text-white tracking-tight">
+                  ZumpFun
+                </span>
+                <span className="text-xs text-gray-400 font-medium -mt-1">
+                  Privacy Launchpad
+                </span>
+              </div>
+            </Link>
+
+            {/* Navigation Links */}
+            <div className="flex items-center gap-2">
+              {navLinks.map((link) => {
+                const Icon = link.icon;
+                const isActive = location.pathname === link.path;
+                return (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    className={`
+                      flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all
+                      ${isActive
+                        ? 'bg-white/10 text-white shadow-lg shadow-white/5'
+                        : 'text-gray-400 hover:text-white hover:bg-white/5'
+                      }
+                    `}
+                  >
+                    <Icon className="w-4 h-4" />
+                    {link.label}
+                  </Link>
+                );
+              })}
+              <div className="ml-4 pl-4 border-l border-white/10 flex items-center gap-3">
+                <DevModeToggle />
+                <WalletConnect />
+              </div>
             </div>
           </div>
         </div>
       </nav>
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+      {/* Main Content */}
+      <main className="pt-20">
         {children}
       </main>
-      <footer className="border-t border-purple-500/20 bg-gray-900/50 backdrop-blur-sm mt-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <p className="text-center text-gray-400 text-sm">
-            ZumpFun - Privacy-First Token Launches on Ztarknet
-          </p>
+
+      {/* Footer */}
+      <footer className="border-t border-white/5 bg-black/40 backdrop-blur-xl mt-24">
+        <div className="max-w-7xl mx-auto px-6 py-12">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-gray-400 text-sm">
+              © 2024 ZumpFun. Privacy-first token launches on Ztarknet.
+            </p>
+            <div className="flex gap-6 text-sm text-gray-400">
+              <a href="#" className="hover:text-white transition-colors">Docs</a>
+              <a href="#" className="hover:text-white transition-colors">GitHub</a>
+              <a href="#" className="hover:text-white transition-colors">Discord</a>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
@@ -63,20 +102,21 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 // Main App component
 const App: React.FC = () => {
   return (
-    <StarknetConfig connectors={connectors} autoConnect>
-      <ThemeProvider>
-        <BrowserRouter>
-          <Layout>
-            <Routes>
-              <Route path="/" element={<TokenLaunch />} />
-              <Route path="/market" element={<MarketView />} />
-              <Route path="/market/:tokenAddress" element={<MarketView />} />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </Layout>
-        </BrowserRouter>
-      </ThemeProvider>
-    </StarknetConfig>
+    <DevModeProvider>
+      <BrowserRouter>
+        <NetworkBanner />
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/launch" element={<Launch />} />
+            <Route path="/market" element={<Market />} />
+            <Route path="/token/:tokenAddress" element={<TokenDetail />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Layout>
+        <Toaster />
+      </BrowserRouter>
+    </DevModeProvider>
   );
 };
 
