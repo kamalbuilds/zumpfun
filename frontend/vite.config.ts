@@ -10,6 +10,10 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  define: {
+    // Polyfill process.env for legacy libraries
+    'process.env': {},
+  },
   server: {
     port: 3001,
     proxy: {

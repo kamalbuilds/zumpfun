@@ -14,7 +14,54 @@
       "privacy_token_declare": "0x6eedcf0f7006014d092b35c46e384d706cd48a7bc1a6cd21f15a5334741a3f0",
       "token_distributor_declare": "0xc042e9ab884b2b19edb0eef0e0fa007dc399f535e5feb158705d967d41703d"
     },
-    "deployed_contracts": {},
-    "verifiers": {}
+    "deployed_contracts": {
+      "launchpad_factory": {
+        "address": "0x016ce9383c9f6e75168dd61d0867159bee439038e7bdcd54a154245beac84f0c",
+        "transaction_hash": "0x01fe9590575168115fc8ea36d857dd52c9f86b056b31e5dfb32777bf81195183",
+        "deployed_at": "2025-11-28",
+        "verified_functions": {
+          "get_total_launches": "✅ Returns 0",
+          "is_paused": "✅ Returns false",
+          "get_launchpad_class_hash": "✅ Returns BondingCurve hash",
+          "get_verifier_address": "✅ Returns 0x1"
+        },
+        "starkscan_url": "https://sepolia.starkscan.co/contract/0x016ce9383c9f6e75168dd61d0867159bee439038e7bdcd54a154245beac84f0c"
+      },
+      "test_privacy_token_zump": {
+        "address": "0x0253bb6dd0f807be6c5625a321d41327134ce32d05d37daa52640b264896a9ae",
+        "transaction_hash": "0x0042d317d4d7fa214a08b5717814b95b18db3553ae26814689761d43f79b87a4",
+        "deployed_at": "2025-11-28",
+        "token_name": "ZUMP",
+        "token_symbol": "ZUMP",
+        "total_supply": "800000000000000000000000",
+        "verified_functions": {
+          "name": "✅ Returns ZUMP",
+          "symbol": "✅ Returns ZUMP",
+          "total_supply": "✅ Returns 800M tokens"
+        },
+        "starkscan_url": "https://sepolia.starkscan.co/contract/0x0253bb6dd0f807be6c5625a321d41327134ce32d05d37daa52640b264896a9ae"
+      },
+      "test_bonding_curve": {
+        "address": "0x00cc39525176d228ae2439d4bbac88dbbdfafa81e91ac1abe860382feece9666",
+        "transaction_hash": "0x012ffe2003c00a9aaa59a7bd9a1e3a4d7fc95dcd1b7f2a1b7928b2c9d002e57f",
+        "deployed_at": "2025-11-28",
+        "curve_type": "sigmoid",
+        "verified_functions": {
+          "get_curve_state": "✅ Returns initial state",
+          "calculate_buy_price": "✅ Calculates prices correctly",
+          "get_trading_params": "✅ Returns fee config",
+          "is_graduated": "✅ Returns false",
+          "get_current_price": "✅ Returns base price",
+          "buy": "✅ EXECUTED SUCCESSFULLY - TX: 0x006eef798ab4b34fcbef385c3ef950ec0d70e0b427dd7a37605f22aca5e79f1f"
+        },
+        "successful_transactions": {
+          "buy_tokens": "0x006eef798ab4b34fcbef385c3ef950ec0d70e0b427dd7a37605f22aca5e79f1f"
+        },
+        "starkscan_url": "https://sepolia.starkscan.co/contract/0x00cc39525176d228ae2439d4bbac88dbbdfafa81e91ac1abe860382feece9666"
+      }
+    },
+    "verifiers": {
+      "placeholder": "0x1"
+    }
   }
 }

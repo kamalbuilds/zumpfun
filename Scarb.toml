@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2024_07"
 
 [dependencies]
-starknet = ">=2.8.2"
+starknet = "2.7.0"
 
 [cairo]
 sierra-replace-ids = true
@@ -12,8 +12,3 @@ sierra-replace-ids = true
 [[target.starknet-contract]]
 sierra = true
 casm = true
-
-[scripts]
-test = "scarb cairo-test"
-build = "scarb build"
-fmt = "scarb fmt"
